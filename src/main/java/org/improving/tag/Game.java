@@ -1,23 +1,17 @@
 package org.improving.tag;
 
 import org.improving.tag.commands.*;
-
 import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Game {
-
-    private final LookCommand lCmd;
-    private final DanceCommand dCmd;
-    private final InventoryCommand iCmd;
-    private final JumpCommand jCmd;
     private Date startTime;
     private Date endTime;
-    private BaseEmoteCommand[] commands;
+    private Command[] commands;
 
     public Game() {
-        commands = new BaseEmoteCommand[]{
+        commands = new Command[]{
                 new LookCommand(),
                 new DanceCommand(),
                 new JumpCommand(),
@@ -48,7 +42,7 @@ public class Game {
         while (loop) {
             System.out.print("> ");
             String input = scanner.nextLine().trim();
-            BaseEmoteCommand validCommand = getValidCommand(input);
+            Command validCommand = getValidCommand(input);
             if (null != validCommand) {
                 validCommand.execute(input);
             } else if (input.equals("exit")) {
@@ -63,8 +57,8 @@ public class Game {
         }
     }
 
-    private BaseEmoteCommand getValidCommand(String input) {
-        for (BaseEmoteCommand command : commands) {
+    private Command getValidCommand(String input) {
+        for (Command command : commands) {
             if (command.isValid(input)) {
                 return command;
             }
