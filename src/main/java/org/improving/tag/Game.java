@@ -1,4 +1,5 @@
 package org.improving.tag;
+
 import org.improving.tag.commands.DanceCommand;
 import org.improving.tag.commands.InventoryCommand;
 import org.improving.tag.commands.JumpCommand;
@@ -16,12 +17,15 @@ public class Game {
     public Date getStartTime() {
         return startTime;
     }
+
     private void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
+
     public Date getEndTime() {
         return endTime;
     }
+
     private void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
@@ -29,16 +33,16 @@ public class Game {
     public void run() {
         Scanner scanner = new Scanner(System.in);
         this.setStartTime(new Date());
-                    boolean loop = true;
-                     while (loop) {
+        boolean loop = true;
+        while (loop) {
             System.out.print("> ");
-            String input = scanner.nextLine();
-                     LookCommand lCmd = new LookCommand();
-                     DanceCommand dCmd = new DanceCommand();
-                     InventoryCommand iCmd = new InventoryCommand();
-                         JumpCommand jCmd = new JumpCommand();
+            String input = scanner.nextLine().trim();
+            LookCommand lCmd = new LookCommand();
+            DanceCommand dCmd = new DanceCommand();
+            InventoryCommand iCmd = new InventoryCommand();
+            JumpCommand jCmd = new JumpCommand();
             if (lCmd.isValid(input)) {
-                     lCmd.execute(input);
+                lCmd.execute(input);
             } else if (dCmd.isValid(input)) {
                 dCmd.execute(input);
 
@@ -48,7 +52,7 @@ public class Game {
             } else if (jCmd.isValid(input)) {
                 jCmd.execute(input);
 
-            } else if (input.trim().equals("exit")) {
+            } else if (input.equals("exit")) {
                 System.out.println("Goodbye.");
                 loop = false;
             } else {
