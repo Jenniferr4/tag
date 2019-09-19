@@ -1,9 +1,6 @@
 package org.improving.tag;
 
-import org.improving.tag.commands.DanceCommand;
-import org.improving.tag.commands.InventoryCommand;
-import org.improving.tag.commands.JumpCommand;
-import org.improving.tag.commands.LookCommand;
+import org.improving.tag.commands.*;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -11,8 +8,21 @@ import java.util.Scanner;
 
 public class Game {
 
+    private final LookCommand lCmd;
+    private final DanceCommand dCmd;
+    private final InventoryCommand iCmd;
+    private final JumpCommand jCmd;
     private Date startTime;
     private Date endTime;
+    private BaseEmoteCommand[] commands;
+
+    public Game() {
+        commands = new BaseEmoteCommand[]{
+                new LookCommand(),
+                new DanceCommand(),
+                new JumpCommand(),
+                new InventoryCommand()};
+    }
 
     public Date getStartTime() {
         return startTime;
@@ -34,24 +44,13 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         this.setStartTime(new Date());
         boolean loop = true;
+
         while (loop) {
             System.out.print("> ");
             String input = scanner.nextLine().trim();
-            LookCommand lCmd = new LookCommand();
-            DanceCommand dCmd = new DanceCommand();
-            InventoryCommand iCmd = new InventoryCommand();
-            JumpCommand jCmd = new JumpCommand();
-            if (lCmd.isValid(input)) {
-                lCmd.execute(input);
-            } else if (dCmd.isValid(input)) {
-                dCmd.execute(input);
-
-            } else if (iCmd.isValid(input)) {
-                iCmd.execute(input);
-
-            } else if (jCmd.isValid(input)) {
-                jCmd.execute(input);
-
+            BaseEmoteCommand validCommand = getValidCommand(input);
+            if (null != validCommand) {
+                validCommand.execute(input);
             } else if (input.equals("exit")) {
                 System.out.println("Goodbye.");
                 loop = false;
@@ -62,5 +61,15 @@ public class Game {
             this.setEndTime(new Date());
 
         }
+    }
+
+    private BaseEmoteCommand getValidCommand(String input) {
+        for (BaseEmoteCommand command : commands) {
+            if (command.isValid(input)) {
+                return command;
+            }
+
+        }
+        return null;
     }
 }
