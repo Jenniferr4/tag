@@ -20,7 +20,7 @@ public class SmellCommandTests {
     @Test
     public void execute_should_return_phrase() {
         //act
-        target.execute(null);
+        target.execute(null, null);
 
         //assert
         assertEquals("I'd rather not..", io.lastText);
@@ -29,7 +29,7 @@ public class SmellCommandTests {
     @Test
     public void isValid_should_be_true_when_input_is_smell() {
         //Act
-        var result = target.isValid("smell");
+        var result = target.isValid("smell", null);
 
         //Assert
         assertTrue(result);
@@ -38,7 +38,7 @@ public class SmellCommandTests {
     @Test
     public void isValid_should_be_true_when_input_is_smell_with_spaces() {
         //Act
-        var result = target.isValid("    smell     ");
+        var result = target.isValid("    smell     ", null);
 
         //Assert
         assertTrue(result);
@@ -47,7 +47,7 @@ public class SmellCommandTests {
     @Test
     public void isValid_should_be_true_when_input_is_smell_with_caps() {
         //Act
-        var result = target.isValid("sMeLL");
+        var result = target.isValid("sMeLL", null);
 
         //Assert
         assertTrue(result);
@@ -56,7 +56,7 @@ public class SmellCommandTests {
     @Test
     public void isValid_should_be_false_when_input_is_foobar() {
         //Act
-        var result = target.isValid("foobar");
+        var result = target.isValid("foobar", null);
 
         //Assert
         assertFalse(result);
@@ -65,7 +65,7 @@ public class SmellCommandTests {
     @Test
     public void isValid_should_be_false_when_input_is_null() {
         //Act
-        var result = target.isValid(null);
+        var result = target.isValid(null, null);
 
         //Assert
         assertFalse(result);
