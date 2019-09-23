@@ -24,6 +24,7 @@ public class DanceCommandTests {
         //assert
         assertEquals("You dance around in a circle.", io.lastText);
     }
+
     @Test
     public void isValid_should_be_true_when_input_is_dance() {
         //Act

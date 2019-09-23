@@ -1,7 +1,7 @@
-import org.improving.tag.commands.DanceCommand; import org.improving.tag.commands.MoveCommand;
+import org.improving.tag.commands.DanceCommand;
+import org.improving.tag.commands.MoveCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.stereotype.Component;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -34,6 +34,7 @@ public class MoveCommandTests {
         //Assert
         assertEquals("You proceed to the moon.", io.lastText);
     }
+
     @Test
     public void isValid_should_be_true_when_input_is_move() {
         //Act
@@ -78,6 +79,7 @@ public class MoveCommandTests {
         //Assert
         assertFalse(result);
     }
+
     @Test
     public void isValid_should_be_false_when_input_is_only_one_word() {
         //Act
