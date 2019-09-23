@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SmellCommand extends BaseEmoteCommand {
-    public SmellCommand (InputOutput io) {
-        super ("Smell", "I'd rather not..", io);
+    public SmellCommand(InputOutput io) {
+        super("Smell", "I'd rather not..", io);
     }
 }

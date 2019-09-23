@@ -24,6 +24,6 @@ public class CountCommand implements Command {
     public void execute(String input) {
         input = input.trim();
         var destination = input.substring(5);
-        io.displayText("You count " + destination + ".");
+        io.displayText("You count" + destination + ".");
     }
 }
