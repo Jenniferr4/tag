@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 public class SetNameCommand implements Command{
     private final InputOutput io;
 
+
+
     public SetNameCommand(InputOutput io) {
         this.io = io;
     }

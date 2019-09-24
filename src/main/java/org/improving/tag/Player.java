@@ -2,6 +2,20 @@ package org.improving.tag;
 
 public class Player {
     private String name;
+    private Location location;
+
+    public Player(Location location) {
+        this.location = location;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     private int hitPoints = 100;
 
     public String getName() {return name; }
