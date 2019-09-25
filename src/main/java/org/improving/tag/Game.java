@@ -3,10 +3,7 @@ package org.improving.tag;
 import org.improving.tag.commands.*;
 import org.springframework.stereotype.Component;
 
-import javax.xml.crypto.Data;
-
 import java.util.Date;
-import java.util.Scanner;
 
 @Component
 public class Game {
@@ -16,13 +13,15 @@ public class Game {
     private InputOutput io;
     private Player p;
     private Location startingLocation;
+    private final SaveGameFactory saveFactory;
 
 
-    public Game(Command[] commands, InputOutput io) {
+    public Game(Command[] commands, InputOutput io, SaveGameFactory saveFactory) {
         startingLocation = buildWorld();
         this.commands = commands;
         this.io = io;
         this.p = new Player(startingLocation);
+        this.saveFactory = saveFactory;
 
     }
 
@@ -62,6 +61,7 @@ public class Game {
             if (null != validCommand) {
                 validCommand.execute(input, this);
             } else if (input.equalsIgnoreCase("exit")) {
+                saveFactory.save(this);
                 io.displayText("Goodbye.");
                 loop = false;
             } else {
@@ -107,10 +107,10 @@ public class Game {
         var tm = new Location();
         tm.setName("The Mountains");
 
-        var tr  = new Location();
+        var tr = new Location();
         tr.setName("The Reef");
 
-        var  mall= new Location();
+        var mall = new Location();
         mall.setName("The Mall");
 
         var mntdm = new Location();
@@ -120,40 +120,40 @@ public class Game {
         vod.setName("The Volcano of Death");
 
 
-        tdh.getExits().add(new Exit("Heaven Ave" , tmcs, "h", "heaven", "ave"));
+        tdh.getExits().add(new Exit("Heaven Ave", tmcs, "h", "heaven", "ave"));
         tdh.getExits().add(new Exit("The Deathly Brownie", td, "tdb", "brownie", "the", "death"));
 
-        td.getExits().add(new Exit("Camel Path" , ta, "cp", "camel", "path"));
-        td.getExits().add(new Exit("Rocky Road" ,ict , "RR", "Rock", "RRoad"));
-        td.getExits().add(new Exit("The Docks" ,air , "td", "dk", "dock"));
+        td.getExits().add(new Exit("Camel Path", ta, "cp", "camel", "path"));
+        td.getExits().add(new Exit("Rocky Road", ict, "RR", "Rock", "RRoad"));
+        td.getExits().add(new Exit("The Docks", air, "td", "dk", "dock"));
 
-        tmcs.getExits().add(new Exit("Highway 121" , ta, "121", "hwy 121", "h121"));
-        tmcs.getExits().add(new Exit("Paradise Rd." ,tr , "Paradise", "Paraiso", "PdRd"));
-        tmcs.getExits().add(new Exit("Highway 21" , vod , "h21", "hw21", "21"));
+        tmcs.getExits().add(new Exit("Highway 121", ta, "121", "hwy 121", "h121"));
+        tmcs.getExits().add(new Exit("Paradise Rd.", tr, "Paradise", "Paraiso", "PdRd"));
+        tmcs.getExits().add(new Exit("Highway 21", vod, "h21", "hw21", "21"));
 
-        tr.getExits().add(new Exit("The Reef" ,tvm , "reef", "rf"));
-        tr.getExits().add(new Exit("The City Walk" ,mall , "City", "walk", "cwalk", "cityw"));
+        tr.getExits().add(new Exit("The Reef", tvm, "reef", "rf"));
+        tr.getExits().add(new Exit("The City Walk", mall, "City", "walk", "cwalk", "cityw"));
 
-        tm.getExits().add(new Exit("Path to Doom" ,mntdm , "ptd", "pathtod", "path2d"));
-        tm.getExits().add(new Exit("An Escalator of Doom" ,vod , "Edoom", "edoom", "aedoom"));
+        tm.getExits().add(new Exit("Path to Doom", mntdm, "ptd", "pathtod", "path2d"));
+        tm.getExits().add(new Exit("An Escalator of Doom", vod, "Edoom", "edoom", "aedoom"));
 
-        tvm.getExits().add(new Exit("The Front Door",ta,"fdoor", "Fdoor", "tfdoor"));
-        tvm.getExits().add(new Exit("The Pudding Slide" ,air , "pud", "slide", "tps"));
+        tvm.getExits().add(new Exit("The Front Door", ta, "fdoor", "Fdoor", "tfdoor"));
+        tvm.getExits().add(new Exit("The Pudding Slide", air, "pud", "slide", "tps"));
 
-        mntdm.getExits().add(new Exit("Jump Into Lava" ,vod , "jintolava", "jilava", "lava"));
-        mntdm.getExits().add(new Exit("The Cab" ,mall , "cab", "taxi", "tcab"));
+        mntdm.getExits().add(new Exit("Jump Into Lava", vod, "jintolava", "jilava", "lava"));
+        mntdm.getExits().add(new Exit("The Cab", mall, "cab", "taxi", "tcab"));
 
-        ta.getExits().add(new Exit("Amaz-ing Moose" ,tvm , "moose", "amoose"));
+        ta.getExits().add(new Exit("Amaz-ing Moose", tvm, "moose", "amoose"));
 
-        air.getExits().add(new Exit("Flight 121" ,tm , "f121", "F121", "fly121"));
-        air.getExits().add(new Exit("Flight to the mall" ,mall , "fmall", "flymall", "flym"));
+        air.getExits().add(new Exit("Flight 121", tm, "f121", "F121", "fly121"));
+        air.getExits().add(new Exit("Flight to the mall", mall, "fmall", "flymall", "flym"));
 
-        ict.getExits().add(new Exit("Magic Portal" ,mntdm , "magic", "portal", "mp"));
+        ict.getExits().add(new Exit("Magic Portal", mntdm, "magic", "portal", "mp"));
 
-        tm.getExits().add(new Exit("The Plane" ,ta , "plane", "tplane", "thep"));
-        tm.getExits().add(new Exit("The Narrow Trail " ,mntdm , "narrow", "tntrail", "tnt"));
-        tm.getExits().add(new Exit("The Lava Flow" ,vod , "lava f", "lavaf", "flava"));
-        tm.getExits().add(new Exit("Bike Trail" ,tr , "bike", "btrail", "rail"));
+        tm.getExits().add(new Exit("The Plane", ta, "plane", "tplane", "thep"));
+        tm.getExits().add(new Exit("The Narrow Trail ", mntdm, "narrow", "tntrail", "tnt"));
+        tm.getExits().add(new Exit("The Lava Flow", vod, "lava f", "lavaf", "flava"));
+        tm.getExits().add(new Exit("Bike Trail", tr, "bike", "btrail", "rail"));
 
 
         return tdh;
