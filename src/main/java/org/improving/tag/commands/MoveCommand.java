@@ -15,12 +15,14 @@ public class MoveCommand implements Command {
 
     @Override
     public boolean isValid(String input, Game game) {
-        if(input == null) return false;
+        if (input == null) return false;
         input = input.trim();
         var parts = input.split(" ");
         if (parts.length == 1) return false;
         return parts[0].equalsIgnoreCase("move");
     }
+
+
 
     @Override
     public void execute(String input, Game game) {
@@ -38,14 +40,21 @@ public class MoveCommand implements Command {
                         break;
                     }
                 }
+
             }
             if (exit != null) break;
+
         }
         if (exit == null){
             io.displayText("This route is unavailable.");
             return;
         }
+        if (game.getPlayer().getLocation().getAdversary() != null) {
+            io.displayText("You shall NOT PASS!!");
+            return;}
+
         game.getPlayer().setLocation(exit.getDestination());
         io.displayText("You travel " + exit.getName() + ".");
     }
 }
+

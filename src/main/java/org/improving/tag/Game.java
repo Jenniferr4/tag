@@ -26,7 +26,7 @@ public class Game {
         this.p = new Player(startingLocation);
 
 
-        this.saveFactory = null;
+        this.saveFactory = saveFactory;
     }
 
     public Location getStartingLocation() {
@@ -65,8 +65,8 @@ public class Game {
             if (null != validCommand) {
                 validCommand.execute(input, this);
             } else if (input.equalsIgnoreCase("exit")) {
-                saveFactory.save(this);
                 io.displayText("Goodbye.");
+                saveFactory.save(this);
                 loop = false;
             } else {
                 io.displayText("Huh? I don't understand.");
@@ -90,6 +90,7 @@ public class Game {
         var tdh = new Location();
         tdh.setName("The Deathly Hallows");
         this.locationList.add(tdh);
+        tdh.setAdversary(new Adversary("Sauoron"));
 
         var td = new Location();
         td.setName("The Desert");
@@ -102,6 +103,7 @@ public class Game {
         var tmcs = new Location();
         tmcs.setName("The Mac & Cheese Shop");
         this.locationList.add(tmcs);
+
 
         var tvm = new Location();
         tvm.setName("The Velvet Moose");
