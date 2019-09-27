@@ -5,12 +5,16 @@ public class Adversary {
     private int hitPoints;
     private int damageTaken;
     private int attackDamage;
+    private int maxHitPoints;
 
     public Adversary(String name) {
         this.name = name;
-        this.hitPoints = 100;
+        this.maxHitPoints = 100;
+        this.hitPoints = this.maxHitPoints - this.damageTaken;
         this.damageTaken = 0;
         this.attackDamage = 1;
+        this.maxHitPoints = 100;
+
     }
 
     public String getName() {
@@ -46,4 +50,11 @@ public class Adversary {
        // damageTaken = damageTaken + damageAmount;
     }
 
+    public int getMaxHitPoints() {
+        return maxHitPoints;
+    }
+
+    public void setMaxHitPoints(int maxHitPoints) {
+        this.maxHitPoints = maxHitPoints;
+    }
 }

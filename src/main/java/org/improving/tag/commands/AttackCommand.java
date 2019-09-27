@@ -8,37 +8,41 @@ import java.util.Random;
 
 @Component
 public class AttackCommand implements Command {
-    InputOutput io;
+    private InputOutput io;
 
-    AttackCommand(InputOutput io) {
-    }
-
-    {
+    private AttackCommand(InputOutput io) {
         this.io = io;
+
     }
 
     @Override
     public boolean isValid(String input, Game game) {
         if (input == null) return false;
-        input.trim();
-        return input.equalsIgnoreCase("attack");
+
+        return input.trim().equalsIgnoreCase("attack");
     }
 
 
     @Override
     public void execute(String input, Game game) {
-        Random random = new Random();
-        if (game.getPlayer().getLocation().getAdversary() == game.getStartingLocation().getAdversary()) {
+        var adversary = game .getPlayer().getLocation().getAdversary();
+
+        if (adversary == null) {
             io.displayText("Attack what? ");
-        } else if (random.nextInt(100) <= 20) {
+        } else {
+            Random random = new Random();
+            int Random = random.nextInt(100);
+            Random += 1;
 
-            game.getPlayer().getLocation().getAdversary().setDamageTaken(10);
-            io.displayText("" + game.getPlayer().getLocation()
-                    .getAdversary().getHitPoints() + "remaining hp for" +
-                    game.getPlayer().getLocation().getAdversary().getName());
+            if (Random <= 20) {
+                adversary.setDamageTaken(adversary.getDamageTaken() +10);
+                adversary.setHitPoints(adversary.getHitPoints() - 10);
+                io.displayText(adversary.getName()+"'s" +" remaining points are " + adversary.getHitPoints() + ".");
 
-        }else  {
-            io.displayText("You missed attack.");
+
+            } else {
+                io.displayText("You missed attack!");
+            }
         }
     }
 
