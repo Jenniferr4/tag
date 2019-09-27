@@ -14,6 +14,17 @@ public class Game {
     private Command[] commands;
     private InputOutput io;
     private Player p;
+    private Adversary adv;
+
+
+    public Adversary getAdv() {
+        return adv;
+    }
+
+    public void setAdv(Adversary adv) {
+        this.adv = adv;
+    }
+
     private Location startingLocation;
     private List<Location> locationList = new ArrayList<>();
     private final SaveGameFactory saveFactory;
@@ -90,7 +101,7 @@ public class Game {
         var tdh = new Location();
         tdh.setName("The Deathly Hallows");
         this.locationList.add(tdh);
-        tdh.setAdversary(new Adversary("Sauoron"));
+
 
         var td = new Location();
         td.setName("The Desert");
@@ -103,7 +114,7 @@ public class Game {
         var tmcs = new Location();
         tmcs.setName("The Mac & Cheese Shop");
         this.locationList.add(tmcs);
-
+        tmcs.setAdversary(new Adversary("Sauoron"));
 
         var tvm = new Location();
         tvm.setName("The Velvet Moose");

@@ -42,7 +42,8 @@ public class Adversary {
     }
 
     public void setAttackDamage(int attackDamage) {
-        this.attackDamage = attackDamage;
+        hitPoints = hitPoints- damageTaken;
+       // damageTaken = damageTaken + damageAmount;
     }
 
 }
