@@ -3,6 +3,8 @@ package org.improving.tag;
 public class Player {
     private String name;
     private Location location;
+    private int hitPoints = 100;
+    private Inventory inventory = new Inventory();
 
     public Player(Location location) {
         this.location = location;
@@ -16,13 +18,24 @@ public class Player {
         this.location = location;
     }
 
-    private int hitPoints = 100;
+    public String getName() {
+        return name;
+    }
 
-    public String getName() {return name; }
-    public void setName(String name) {this.name = name ;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getHitPoints() {
-        return hitPoints; }
-    public void setHitPoints(int hitPoints) {
-        this.hitPoints = hitPoints; }
+        return hitPoints;
     }
+
+    public void setHitPoints(int hitPoints) {
+        this.hitPoints = hitPoints;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+
+    }
+}
