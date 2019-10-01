@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class WaveCommand extends BaseEmoteCommand {
     public WaveCommand(InputOutput io) {
-        super("Wave", "Who are we waving at?", io);
+        super("Who are you waving at?", io , "wave", "w");
     }
 }

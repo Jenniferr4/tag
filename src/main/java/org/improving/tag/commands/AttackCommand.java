@@ -34,7 +34,7 @@ public class AttackCommand implements Command {
             int Random = random.nextInt(100);
             Random += 1;
 
-            if (Random <= 20) {
+            if (Random <= 99) {
                 adversary.setDamageTaken(adversary.getDamageTaken() +10);
                 adversary.setHitPoints(adversary.getHitPoints() - 10);
                 io.displayText(adversary.getName()+"'s" +" remaining points are " + adversary.getHitPoints() + ".");

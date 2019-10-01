@@ -69,19 +69,25 @@ public class Game {
 
         boolean loop = true;
         while (loop) {
-            io.displayPrompt("> ");
-            String input = io.receiveInput();
 
-            Command validCommand = getValidCommand(input);
-            if (null != validCommand) {
-                validCommand.execute(input, this);
-            } else if (input.equalsIgnoreCase("exit")) {
-                io.displayText("Goodbye.");
-                saveFactory.save(this);
+            try {
+                io.displayPrompt("> ");
+                String input = io.receiveInput();
+                Command validCommand = getValidCommand(input);
+
+                if (null != validCommand) {
+                    validCommand.execute(input, this);
+                } else if (input.equalsIgnoreCase("exit")) {
+                    io.displayText("Goodbye.");
+                    saveFactory.save(this);
+                } else {
+                    io.displayText("Huh? I don't understand.");
+                }
+            } catch (GameExitException ex) {
                 loop = false;
-            } else {
-                io.displayText("Huh? I don't understand.");
             }
+
+
             this.setEndTime(new Date());
 
         }
@@ -114,7 +120,6 @@ public class Game {
         var tmcs = new Location();
         tmcs.setName("The Mac & Cheese Shop");
         this.locationList.add(tmcs);
-        tmcs.setAdversary(new Adversary("Sauron"));
 
         var tvm = new Location();
         tvm.setName("The Velvet Moose");
@@ -143,6 +148,8 @@ public class Game {
         var mntdm = new Location();
         mntdm.setName("Mount Doom");
         this.locationList.add(mntdm);
+        mntdm.setAdversary(new Adversary("Sauron"));
+
 
         var vod = new Location();
         vod.setName("The Volcano of Death");
@@ -154,7 +161,7 @@ public class Game {
 
         td.getExits().add(new Exit("Camel Path", ta, "cp", "camel", "path"));
         td.getExits().add(new Exit("Rocky Road", ict, "RR", "Rock", "RRoad"));
-        td.getExits().add(new Exit("The Docks", air, "td", "dk", "dock"));
+        td.getExits().add(new Exit("The Docks", air, "td", "dock", "docks"));
 
         tmcs.getExits().add(new Exit("Highway 121", ta, "121", "hwy 121", "h121"));
         tmcs.getExits().add(new Exit("Paradise Rd.", tr, "Paradise", "Paraiso", "PdRd"));
@@ -189,7 +196,7 @@ public class Game {
     }
 
     public Location getLocationOf(final String intendedLocationName) {
-        for (Location location: locationList) {
+        for (Location location : locationList) {
             if (intendedLocationName.equalsIgnoreCase(location.getName())) {
                 return location;
             }

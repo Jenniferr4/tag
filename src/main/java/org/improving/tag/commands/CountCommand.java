@@ -14,7 +14,7 @@ public class CountCommand implements Command {
 
     @Override
     public boolean isValid(String input, Game game) {
-        if(input == null) return false;
+        if (input == null) return false;
         input = input.trim();
         var parts = input.split(" ");
         if (parts.length == 1) return false;
