@@ -1,6 +1,7 @@
 package org.improving.tag;
 
 public class Adversary {
+    private final Inventory inventory;
     private String name;
     private int hitPoints;
     private int damageTaken;
@@ -14,6 +15,7 @@ public class Adversary {
         this.damageTaken = 0;
         this.attackDamage = 1;
         this.maxHitPoints = 100;
+        this.inventory = new Inventory();
 
     }
 
@@ -46,8 +48,7 @@ public class Adversary {
     }
 
     public void setAttackDamage(int attackDamage) {
-        hitPoints = hitPoints- damageTaken;
-       // damageTaken = damageTaken + damageAmount;
+        hitPoints = hitPoints - damageTaken;
     }
 
     public int getMaxHitPoints() {
@@ -56,5 +57,9 @@ public class Adversary {
 
     public void setMaxHitPoints(int maxHitPoints) {
         this.maxHitPoints = maxHitPoints;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }

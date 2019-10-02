@@ -15,16 +15,6 @@ public class Game {
     private Command[] commands;
     private InputOutput io;
     private Player p;
-    private Adversary adv;
-
-
-    public Adversary getAdv() {
-        return adv;
-    }
-
-    public void setAdv(Adversary adv) {
-        this.adv = adv;
-    }
 
     private Location startingLocation;
     private List<Location> locationList = new ArrayList<>();
@@ -39,10 +29,6 @@ public class Game {
 
 
         this.saveFactory = saveFactory;
-    }
-
-    public Location getStartingLocation() {
-        return startingLocation;
     }
 
     public Player getPlayer() {
@@ -107,7 +93,7 @@ public class Game {
     private Location buildWorld() {
         var tdh = new Location();
         tdh.setName("The Deathly Hallows");
-        tdh.setTreasureChest( new TreasureChest(UniqueItems.BLUE_SHELL , "A Deadly Shell " ));
+        tdh.setTreasureChest(new TreasureChest(UniqueItems.BLUE_SHELL, "A Deadly Shell "));
         this.locationList.add(tdh);
 
 
@@ -121,13 +107,14 @@ public class Game {
 
         var tmcs = new Location();
         tmcs.setName("The Mac & Cheese Shop");
-        tmcs.setTreasureChest( new TreasureChest(UniqueItems.THE_ONE_RING , "A Kraft Box " ));
+        tmcs.setTreasureChest(new TreasureChest(UniqueItems.THE_ONE_RING, "A Kraft Box "));
 
         this.locationList.add(tmcs);
 
         var tvm = new Location();
         tvm.setName("The Velvet Moose");
         this.locationList.add(tvm);
+        tvm.setVillain(new Villain("Mad Moose"));
 
         var air = new Location();
         air.setName("Airport");
@@ -177,7 +164,7 @@ public class Game {
         tm.getExits().add(new Exit("Path to Doom", mntdm, "ptd", "pathtod", "path2d"));
         tm.getExits().add(new Exit("An Escalator of Doom", vod, "Edoom", "edoom", "aedoom"));
 
-        tvm.getExits().add(new Exit("The Front Door", ta, "fdoor", "Fdoor", "tfdoor"));
+        tvm.getExits().add(new Exit("The Front Door", ta, "fdoor", "Fdoor", "tfdoor", "door", "front"));
         tvm.getExits().add(new Exit("The Pudding Slide", air, "pud", "slide", "tps"));
 
         mntdm.getExits().add(new Exit("Jump Into Lava", vod, "jintolava", "jilava", "lava"));

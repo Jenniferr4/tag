@@ -23,4 +23,8 @@ public class Inventory {
         }
         return displayString;
     }
+
+    public Item getItem() {
+        return items.get();
+    }
 }
