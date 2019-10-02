@@ -25,6 +25,6 @@ public class Inventory {
     }
 
     public Item getItem() {
-        return items.get();
+        return items.get(0);
     }
 }

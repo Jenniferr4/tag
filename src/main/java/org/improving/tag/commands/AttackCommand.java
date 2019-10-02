@@ -47,35 +47,35 @@ public class AttackCommand implements Command {
                 if (adversary.getHitPoints() == 0) {
                     var advItem = adversary.getInventory().getItem();
 
-                    io.displayText("You have defeated " + adversary.getName() + ". " + advItem + " was found on his dead corpse. #winning");
+                    io.displayText( adversary.getName() + "has been defeated. You have obtained ..." + advItem );
                     game.getPlayer().getInventory().addItem(advItem);
                     game.getPlayer().getLocation().setAdversary(null);
                 }
             }
         }
 //Villain-------------------------------------------------------------------------------
-        {
-            var villain = game.getPlayer().getLocation().getVillain();
-
-            if (villain == null) {
-                io.displayText("Attack what? ");
-            } else {
-                Random random = new Random();
-                int Random = random.nextInt(100);
-                Random += 1;
-
-                if (Random <= 99) {
-                    villain.setDamageTaken(villain.getDamageTaken() + 10);
-                    villain.setHitPoints(villain.getHitPoints() - 10);
-                    io.displayText(villain.getName() + "'s" + " remaining points are " + villain.getHitPoints() + ".");
-
-
-                } else {
-                    io.displayText("You missed attack!");
-                }
-
-            }
-        }
+//        {
+//            var villain = game.getPlayer().getLocation().getVillain();
+//
+//            if (villain == null) {
+//                io.displayText("Attack what? ");
+//            } else {
+//                Random random = new Random();
+//                int Random = random.nextInt(100);
+//                Random += 1;
+//
+//                if (Random <= 99) {
+//                    villain.setDamageTaken(villain.getDamageTaken() + 10);
+//                    villain.setHitPoints(villain.getHitPoints() - 10);
+//                    io.displayText(villain.getName() + "'s" + " remaining points are " + villain.getHitPoints() + ".");
+//
+//
+//                } else {
+//                    io.displayText("You missed attack!");
+//                }
+//
+//            }
+//        }
 
 
     }
