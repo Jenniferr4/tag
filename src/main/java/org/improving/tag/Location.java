@@ -12,7 +12,7 @@ public class Location {
     private List<Exit> exits = new ArrayList<>();
     private Adversary adversary;
     private TreasureChest treasureChest = TreasureChest.NO_TREASURE;
-    private Villain villain;
+
 
     public Adversary getAdversary() {
         return adversary;
@@ -67,13 +67,6 @@ public class Location {
         return treasureChest;
     }
 
-    public void setVillain(Villain villain) {
-        this.villain = villain;
-    }
-
-    public Villain getVillain() {
-        return villain;
-    }
 }
 
 

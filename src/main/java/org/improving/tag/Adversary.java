@@ -23,10 +23,6 @@ public class Adversary {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getHitPoints() {
         return hitPoints;
     }
@@ -41,22 +37,6 @@ public class Adversary {
 
     public void setDamageTaken(int damageTaken) {
         this.damageTaken = damageTaken;
-    }
-
-    public int getAttackDamage() {
-        return attackDamage;
-    }
-
-    public void setAttackDamage(int attackDamage) {
-        hitPoints = hitPoints - damageTaken;
-    }
-
-    public int getMaxHitPoints() {
-        return maxHitPoints;
-    }
-
-    public void setMaxHitPoints(int maxHitPoints) {
-        this.maxHitPoints = maxHitPoints;
     }
 
     public Inventory getInventory() {

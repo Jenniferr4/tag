@@ -114,7 +114,9 @@ public class Game {
         var tvm = new Location();
         tvm.setName("The Velvet Moose");
         this.locationList.add(tvm);
-        tvm.setVillain(new Villain("Mad Moose"));
+        tvm.setAdversary(new Adversary("Mad Moose"));
+        tvm.setTreasureChest(new TreasureChest(UniqueItems.BLUE_SHELL, "A Deadly Shell "));
+
 
         var air = new Location();
         air.setName("Airport");

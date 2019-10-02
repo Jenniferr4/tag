@@ -1,6 +1,7 @@
 package org.improving.tag.items;
 
 public enum UniqueItems implements Item {
+    THE_UNFORGETABLE_MUSHROOM("An Edible Toad"),
     THE_ONE_RING("A Golden Ring"),
     BLUE_SHELL ("A Blue Shell with Wings"),
     NOTHING ("") {
