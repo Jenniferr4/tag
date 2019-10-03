@@ -28,16 +28,11 @@ public class Inventory {
 
     public String getInventoryDisplay() {
         String displayString = "You have these Items:";
-        items.sort(new ItemComparator());
-        for (Item item : items) {
-            displayString += "\n" + item;
-        }
-        return displayString;
-    }
+        return items.stream().sorted(new ItemComparator()).map(i ->"\n"+i).reduce(displayString, (answer, itemValue) -> answer+=itemValue);
+}
 
     public Item getItem() {
         return items.get(3);
     }
-
 
 }

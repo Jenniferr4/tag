@@ -41,7 +41,7 @@ public class AttackCommand extends BaseAliasedCommand {
             if (adversary.getHitPoints() == 0) {
                 var advItem = adversary.getInventory().getItem();
                 game.getPlayer().getInventory().addItem(advItem);
-                io.displayText("You have defeated " + adversary.getName() + " and obtained his loot..." + advItem);
+                io.displayText("You have defeated " + adversary.getName() + " and obtained his loot..." + "\n" + advItem);
 
                 game.getPlayer().getLocation().setAdversary(null);
             }
