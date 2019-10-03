@@ -36,7 +36,7 @@ public class Inventory {
     }
 
     public Item getItem() {
-        return items.get(0);
+        return items.get(3);
     }
 
 

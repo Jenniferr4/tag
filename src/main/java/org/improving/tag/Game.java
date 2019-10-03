@@ -115,6 +115,7 @@ public class Game {
         tvm.setName("The Velvet Moose");
         this.locationList.add(tvm);
         tvm.setAdversary(new Adversary("Mad Moose"));
+        tvm.getAdversary().getInventory().addItem(UniqueItems.THE_UNFORGETTABLE_MUSHROOM);
         tvm.setTreasureChest(new TreasureChest(UniqueItems.BLUE_SHELL, "A Deadly Shell "));
 
 
