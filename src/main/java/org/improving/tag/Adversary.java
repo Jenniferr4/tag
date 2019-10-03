@@ -19,6 +19,7 @@ public class Adversary {
 
     }
 
+
     public String getName() {
         return name;
     }

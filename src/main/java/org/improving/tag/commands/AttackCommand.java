@@ -11,18 +11,11 @@ public class AttackCommand extends BaseAliasedCommand {
     private final Random random;
     private InputOutput io;
 
-    public AttackCommand(InputOutput io, Random random) {
+    private AttackCommand(InputOutput io, Random random) {
         super(io, "attack", "a", "atack", "at", "att");
         this.io = io;
         this.random = random;
 
-    }
-
-    @Override
-    public boolean isValid(String input, Game game) {
-        if (input == null) return false;
-
-        return input.trim().equalsIgnoreCase("attack");
     }
 
     @Override
@@ -47,9 +40,9 @@ public class AttackCommand extends BaseAliasedCommand {
             }
             if (adversary.getHitPoints() == 0) {
                 var advItem = adversary.getInventory().getItem();
-
-                io.displayText(adversary.getName() + "has been defeated. You have obtained ..." + advItem);
                 game.getPlayer().getInventory().addItem(advItem);
+                io.displayText("You have defeated " + adversary.getName() + " and obtained his loot..." + advItem);
+
                 game.getPlayer().getLocation().setAdversary(null);
             }
         }

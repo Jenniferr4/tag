@@ -10,7 +10,7 @@ import java.util.List;
 public class Inventory {
     private final List<Item> items = new ArrayList<>();
 
-    public Inventory(){
+    public Inventory() {
         items.add(UniqueItems.EVERLASTING_GOBSTOPPER);
         items.add(UniqueItems.THE_UNFORGETTABLE_MUSHROOM);
         items.add(UniqueItems.THE_EGOO_WAFFLE);
@@ -23,6 +23,7 @@ public class Inventory {
 
     public void addItem(Item item) {
         items.add(item);
+
     }
 
     public String getInventoryDisplay() {
@@ -35,7 +36,7 @@ public class Inventory {
     }
 
     public Item getItem() {
-        return getItem();
+        return items.get(0);
     }
 
 

@@ -1,11 +1,11 @@
 package org.improving.tag.items;
 
 public enum UniqueItems implements Item {
-    THE_UNFORGETTABLE_MUSHROOM("An Edible Toad", "The Unforgettable Mushroom"),
-    THE_EGOO_WAFFLE("Part of a balanced diet", "Eggo Waffle"),
-    EVERLASTING_GOBSTOPPER("A gobstopper that never loses its flavor", "The Everlasting Gobstopper"),
-    THE_ONE_RING("A Golden Ring", "The One Ring"),
-    BLUE_SHELL("A Blue Shell with Wings", "A Blue Shell"),
+    THE_UNFORGETTABLE_MUSHROOM("An Edible Toad.", "The Unforgettable Mushroom"),
+    THE_EGOO_WAFFLE("Part of a balanced diet.", "Eggo Waffle"),
+    EVERLASTING_GOBSTOPPER("A gobstopper that never loses its flavor.", "The Everlasting Gobstopper"),
+    THE_ONE_RING("A Golden Ring.", "The One Ring"),
+    BLUE_SHELL("A Blue Shell with Wings.", "A Blue Shell"),
     NOTHING("", "") {
         public String getDescription() {
             throw new UnsupportedOperationException();
