@@ -32,8 +32,7 @@ public class AttackCommand extends BaseAliasedCommand {
             if (Random <= 99) {
                 adversary.setDamageTaken(adversary.getDamageTaken() + 10);
                 adversary.setHitPoints(adversary.getHitPoints() - 10);
-                io.displayText(adversary.getName() + "'s" +
-                        " remaining points are " + adversary.getHitPoints() + ".");
+                io.displayText(adversary.getName().toUpperCase() + "'s" + " remaining points are " + adversary.getHitPoints() + ".");
 
             } else {
                 io.displayText("You missed attack!");
@@ -41,7 +40,7 @@ public class AttackCommand extends BaseAliasedCommand {
             if (adversary.getHitPoints() == 0) {
                 var advItem = adversary.getInventory().getItem();
                 game.getPlayer().getInventory().addItem(advItem);
-                io.displayText("You have defeated " + adversary.getName() + " and obtained his loot..." + "\n" + advItem);
+                io.displayText("You have defeated " + adversary.getName().toUpperCase() + " and obtained his loot..." + "\n" + advItem);
 
                 game.getPlayer().getLocation().setAdversary(null);
             }

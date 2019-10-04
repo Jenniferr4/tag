@@ -27,6 +27,7 @@ public class MoveCommand extends BaseAliasedCommand {
     }
     @Override
     public void childExecute(String input, Game game) {
+        var adversary = game.getPlayer().getLocation().getAdversary();
         input = input.trim();
         var destination = input.substring(input.indexOf(" ") + 1);
 //       ANOTHER METHOD OF WRITING THE SIMILAR THING:
@@ -53,7 +54,7 @@ public class MoveCommand extends BaseAliasedCommand {
         }
 
         if (game.getPlayer().getLocation().getAdversary() != null) {
-            io.displayText( "You shall NOT PASS!!");
+            io.displayText( adversary.getName().toUpperCase() + ": \n"+ "You shall NOT PASS!!");
             return;
         }
 
