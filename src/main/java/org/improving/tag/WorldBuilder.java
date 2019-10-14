@@ -1,25 +1,76 @@
 package org.improving.tag;
 
+import org.improving.tag.database.ExitsDAO;
+import org.improving.tag.database.LocationDAO;
 import org.improving.tag.items.UniqueItems;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+//NOTES
+//make new object and return it
+
+
 @Component
 public class WorldBuilder {
     private List<Location> locationList = new ArrayList<>();
 
+    private final LocationDAO locationDAO;
+    private final ExitsDAO exitsDAO;
 
-    Location buildWorld() {
+    public WorldBuilder(LocationDAO locationDAO, ExitsDAO exitsDAO) {
+        this.locationDAO = locationDAO;
+        this.exitsDAO = exitsDAO;
+    }
+
+    public Location buildWorld() {
+        try {
+            List<Location> locations = locationDAO.findAll();
+            for (Location location : locations) {
+                List<Exit> exits = exitsDAO.findByOriginId(location.getId());
+                exits.forEach(exit -> {
+                    Location destination = locations.stream()
+                            .filter(locat -> locat.getId() == exit.getDestinationId())
+                            .findFirst()
+                            .orElse(null);
+                    exit.setDestination(destination);
+                    location.addExit(exit);
+                });
+            }
+            locationList = locations;
+            return locationList.get(0);
+        } catch (Exception e) {
+            return buildHardCodedWorld();
+        }
+    }
+
+    public Location buildHardCodedWorld() {
+        //=============================================
+        //--- ADVERSARY---------------------------
+
+        var Sauron = new Adversary();
+        Sauron.setName("Sauron");
+        Sauron.setHitPoints(300);
+        Sauron.setItem(UniqueItems.THE_ONE_RING);
+
+        var moose = new Adversary();
+        moose.setName("Mad Moose");
+        moose.setHitPoints(300);
+        moose.setItem(UniqueItems.UNFORGETTABLE_MUSHROOM);
+
+        var koopa = new Adversary();
+        koopa.setName("Blue Koopa");
+        koopa.setHitPoints(20);
+        koopa.setItem(UniqueItems.BLUE_SHELL);
+        //=============================================
+
         var tdh = new Location();
         tdh.setName("The Deathly Hallows");
-        tdh.setTreasureChest(new TreasureChest(UniqueItems.BLUE_SHELL, "A Deadly Shell "));
         this.locationList.add(tdh);
 
-
         var td = new Location();
-        td.setName("The Desert");
+        td.setName("The Dessert");
         this.locationList.add(td);
 
         var ta = new Location();
@@ -27,84 +78,83 @@ public class WorldBuilder {
         this.locationList.add(ta);
 
         var tmcs = new Location();
-        tmcs.setName("The Mac & Cheese Shop");
-        tmcs.setTreasureChest(new TreasureChest(UniqueItems.THE_ONE_RING, "A Kraft Box "));
-
+        tmcs.setName("The Mac and Cheese Shop");
+        tmcs.setTreasureChest(new TreasureChest(UniqueItems.THE_ONE_RING, "A Kraft box"));
+        tmcs.setAdversary(koopa);       ////KOOPA
         this.locationList.add(tmcs);
-
-        var tvm = new Location();
-        tvm.setName("The Velvet Moose");
-        this.locationList.add(tvm);
-        tvm.setAdversary(new Adversary("Mad Moose"));
-        tvm.getAdversary().getInventory().addItem(UniqueItems.THE_UNFORGETTABLE_MUSHROOM);
-        tvm.setTreasureChest(new TreasureChest(UniqueItems.BLUE_SHELL, "A Deadly Shell "));
-
-
-        var air = new Location();
-        air.setName("Airport");
-        this.locationList.add(air);
-
-        var ict = new Location();
-        ict.setName("The Ice Cream Truck");
-        this.locationList.add(ict);
-
-        var tm = new Location();
-        tm.setName("The Mountains");
-        this.locationList.add(tm);
 
         var tr = new Location();
         tr.setName("The Reef");
         this.locationList.add(tr);
 
-        var mall = new Location();
-        mall.setName("The Mall");
-        this.locationList.add(mall);
+        var tm = new Location();
+        tm.setName("The Mall");
+        this.locationList.add(tm);
 
-        var mntdm = new Location();
-        mntdm.setName("Mount Doom");
-        this.locationList.add(mntdm);
-        mntdm.setAdversary(new Adversary("Sauron"));
-
-
-        var vod = new Location();
-        vod.setName("The Volcano of Death");
-        this.locationList.add(vod);
+        var tvm = new Location();
+        tvm.setName("The Velvet Moose");
+        this.locationList.add(tvm);
+        tvm.setAdversary(moose);          ////MadMoose
 
 
-        tdh.getExits().add(new Exit("Heaven Ave", tmcs, "h", "heaven", "ave"));
-        tdh.getExits().add(new Exit("The Deathly Brownie", td, "tdb", "brownie", "the", "death"));
+        var md = new Location();
+        md.setName("Mount Doom");
+        this.locationList.add(md);
+        md.setAdversary(Sauron);          ////Sauron
 
-        td.getExits().add(new Exit("Camel Path", ta, "cp", "camel", "path"));
-        td.getExits().add(new Exit("Rocky Road", ict, "RR", "Rock", "RRoad"));
-        td.getExits().add(new Exit("The Docks", air, "td", "dock", "docks"));
+        var tvd = new Location();
+        tvd.setName("The Volcano of Death");
+        this.locationList.add(tvd);
+
+        var tap = new Location();
+        tap.setName("The Airport");
+        this.locationList.add(tap);
+
+        var ict = new Location();
+        ict.setName("An Ice Cream Truck");
+        this.locationList.add(ict);
+
+        var tms = new Location();
+        tms.setName("The Mountains");
+        this.locationList.add(tms);
+
+        //===================================================================
+        //initializing all the exits==========================================
+
+        tdh.getExits().add(new Exit("Heaven Avenue", tmcs, "h", "ave", "heaven", "ha"));
+        tdh.getExits().add(new Exit("The Deathly Brownie", td, "tdb", "deathly", "brownie", "db"));
+
+        td.getExits().add(new Exit("Camel Path", ta, "cp", "c", "camel", "path"));
+        td.getExits().add(new Exit("Rocky Road", ict, "rocky", "road", "R", "RR"));
+        td.getExits().add(new Exit("The Docks", tap, "TD", "D", "docks", "dock"));
+
+        tr.getExits().add(new Exit("The Scenic Route", tvm, "scenic", "SR", "scenic route", "route"));
+        tr.getExits().add(new Exit("The City Walk", tm, "city", "walk", "C", "w", "cw"));
+
+        tm.getExits().add(new Exit("Path to Doom", md, "path", "p", "pd"));
+        tm.getExits().add(new Exit("An Escalator of Doom", tvd, "escalator", "e", "ed"));
+
+        md.getExits().add(new Exit("Jump Into Lava", tvd, "Jump", "lava", "J", "L", "JL", "jumplava", "jumpintolava"));
+        md.getExits().add(new Exit("The Cab", tm, "Cab", "c", "tc"));
+
+        ta.getExits().add(new Exit("Amaz-ing Moose", tvm, "AM", "Amazing", "Moose", "A", "M"));
+
+        tap.getExits().add(new Exit("Flight 121", tms, "Flight121", "f121", "121"));
+        tap.getExits().add(new Exit("Flight to the Mall", tm, "mall", "Fm", "FTTM"));
 
         tmcs.getExits().add(new Exit("Highway 121", ta, "121", "hwy 121", "h121"));
-        tmcs.getExits().add(new Exit("Paradise Rd.", tr, "Paradise", "Paraiso", "PdRd"));
-        tmcs.getExits().add(new Exit("Highway 21", vod, "h21", "hw21", "21"));
+        tmcs.getExits().add(new Exit("Highway 21", tvd, "21", "h21", "hwy 21", "hwy21"));
+        tmcs.getExits().add(new Exit("Paradise Road", tr, "P", "r", "PR", "Paradise", "Paradise Rd", "Road"));
 
-        tr.getExits().add(new Exit("The Reef", tvm, "reef", "rf"));
-        tr.getExits().add(new Exit("The City Walk", mall, "City", "walk", "cwalk", "cityw"));
+        ict.getExits().add(new Exit("Magic Portal", md, "Magic", "Portal", "MP", "m", "p"));
 
-        tm.getExits().add(new Exit("Path to Doom", mntdm, "ptd", "pathtod", "path2d"));
-        tm.getExits().add(new Exit("An Escalator of Doom", vod, "Edoom", "edoom", "aedoom"));
+        tms.getExits().add(new Exit("The Plane", ta, "Plane", "TP", "P"));
+        tms.getExits().add(new Exit("The Narrow Trail", md, "Narrow", "N", "NT"));
+        tms.getExits().add(new Exit("The Lava Flow", tvd, "Lava", "flow", "L", "F", "LF"));
+        tms.getExits().add(new Exit("Bike Trail", tr, "Bike", "B", "BT"));
 
-        tvm.getExits().add(new Exit("The Front Door", ta, "fdoor", "Fdoor", "tfdoor", "door", "front"));
-        tvm.getExits().add(new Exit("The Pudding Slide", air, "pud", "slide", "tps"));
-
-        mntdm.getExits().add(new Exit("Jump Into Lava", vod, "jintolava", "jilava", "lava"));
-        mntdm.getExits().add(new Exit("The Cab", mall, "cab", "taxi", "tcab"));
-
-        ta.getExits().add(new Exit("Amaz-ing Moose", tvm, "moose", "amoose"));
-
-        air.getExits().add(new Exit("Flight 121", tm, "f121", "F121", "fly121"));
-        air.getExits().add(new Exit("Flight to the mall", mall, "fmall", "flymall", "flym"));
-
-        ict.getExits().add(new Exit("Magic Portal", mntdm, "magic", "portal", "mp"));
-
-        tm.getExits().add(new Exit("The Plane", ta, "plane", "tplane", "thep"));
-        tm.getExits().add(new Exit("The Narrow Trail ", mntdm, "narrow", "tntrail", "tnt"));
-        tm.getExits().add(new Exit("The Lava Flow", vod, "lava f", "lavaf", "flava"));
-        tm.getExits().add(new Exit("Bike Trail", tr, "bike", "btrail", "rail"));
+        tvm.getExits().add(new Exit("The Front Door", ta, "TFD", "F", "D", "FD", "front", "door"));
+        tvm.getExits().add(new Exit("The Pudding Slide", tap, "TPS", "P", "S", "PS", "Pudding", "Slide"));
 
         return tdh;
     }
@@ -112,7 +162,5 @@ public class WorldBuilder {
     public List<Location> getLocationList() {
         return locationList;
     }
-
-
 
 }

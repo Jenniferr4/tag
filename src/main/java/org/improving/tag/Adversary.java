@@ -1,27 +1,21 @@
 package org.improving.tag;
 
+import org.improving.tag.items.Item;
+import org.improving.tag.items.UniqueItems;
+
 public class Adversary {
-    private final Inventory inventory;
     private String name;
     private int hitPoints;
     private int damageTaken;
     private int attackDamage;
-    private int maxHitPoints;
-
-    public Adversary(String name) {
-        this.name = name;
-        this.maxHitPoints = 100;
-        this.hitPoints = this.maxHitPoints - this.damageTaken;
-        this.damageTaken = 0;
-        this.attackDamage = 1;
-        this.maxHitPoints = 100;
-        this.inventory = new Inventory();
-
-    }
-
+    private Item dropItem = UniqueItems.NOTHING;
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getHitPoints() {
@@ -40,7 +34,19 @@ public class Adversary {
         this.damageTaken = damageTaken;
     }
 
-    public Inventory getInventory() {
-        return inventory;
+    public int getAttackDamage() {
+        return attackDamage;
+    }
+
+    public void setAttackDamage(int attackDamage) {
+        this.attackDamage = attackDamage;
+    }
+
+    public void setItem(Item dropItem) {
+        this.dropItem = dropItem;
+    }
+
+    public Item getItem() {
+        return dropItem;
     }
 }

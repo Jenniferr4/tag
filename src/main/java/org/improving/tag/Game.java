@@ -3,7 +3,6 @@ package org.improving.tag;
 import org.improving.tag.commands.Command;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -16,7 +15,7 @@ public class Game {
     private InputOutput io;
     private Player p;
     private Location startingLocation;
-    private List<Location> locationList = new ArrayList<>();
+    private List<Location> locationList;
     private final SaveGameFactory saveFactory;
 
 

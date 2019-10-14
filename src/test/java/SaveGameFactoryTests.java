@@ -25,7 +25,7 @@ public class SaveGameFactoryTests {
          io = new TestInputOutput();
          fsa =mock(FileSystemAdapter.class);
          target =new SaveGameFactory(fsa, io);
-         g = new Game(null, io, target, new WorldBuilder());
+         g = new Game(null, io, target, new WorldBuilder(null, null));
 
     }
 
@@ -35,7 +35,7 @@ public class SaveGameFactoryTests {
         TestInputOutput io = new TestInputOutput();
         FileSystemAdapter fsa = mock(FileSystemAdapter.class);
         SaveGameFactory target = new SaveGameFactory(fsa, io);
-        Game g = new Game(null, io, target, new WorldBuilder());
+        Game g = new Game(null, io, target, new WorldBuilder(null, null));
         Class<Map<String, String>> dictClass =
                  (Class<Map<String, String>>)(Class)Map.class;
         ArgumentCaptor<Map<String, String>> contentsCaptor =

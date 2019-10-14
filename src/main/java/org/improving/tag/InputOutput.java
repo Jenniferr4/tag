@@ -1,11 +1,11 @@
 package org.improving.tag;
 
 public interface InputOutput {
-     String receiveInput() ;
+    String receiveInput();
 
-     void displayText(Object text);
+    void displayText(Object text);
 
-     void displayNewLine();
+    void displayNewLine();
 
-     void displayPrompt(String prompt);
-    }
+    void displayPrompt(String prompt);
+}

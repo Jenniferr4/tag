@@ -1,49 +1,61 @@
 package org.improving.tag.commands;
 
+import org.improving.tag.Adversary;
 import org.improving.tag.Game;
 import org.improving.tag.InputOutput;
+import org.improving.tag.Player;
+import org.improving.tag.items.Item;
+import org.improving.tag.items.UniqueItems;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
 @Component
 public class AttackCommand extends BaseAliasedCommand {
-    private final Random random;
-    private InputOutput io;
+    private final InputOutput io;
+    private final Random r;
 
-    private AttackCommand(InputOutput io, Random random) {
-        super(io, "attack", "a", "atack", "at", "att");
+    public AttackCommand(InputOutput io, Random r) {
+        super(io, "attack", "a", "at", "att", "atta", "attac","swing", "fight", "stab", "mock", "smack");
         this.io = io;
-        this.random = random;
-
+        this.r = r;
     }
 
     @Override
     public void execute(String input, Game game) {
-
-        var adversary = game.getPlayer().getLocation().getAdversary();
-        if (adversary == null) {
-            io.displayText("Attack what? ");
-        } else {
-            Random random = new Random();
-            int Random = random.nextInt(100);
-            Random += 1;
-
-            if (Random <= 99) {
-                adversary.setDamageTaken(adversary.getDamageTaken() + 10);
-                adversary.setHitPoints(adversary.getHitPoints() - 10);
-                io.displayText(adversary.getName().toUpperCase() + "'s" + " remaining points are " + adversary.getHitPoints() + ".");
-
+        if (game.getPlayer().getLocation().getAdversary() == null) {
+            io.displayText("Attack what?");
+            return;
+        }
+        var adv = game.getPlayer().getLocation().getAdversary();
+        int roll = r.nextInt(100) + 1;
+        if (roll <= 70) {
+            adv.setDamageTaken(adv.getDamageTaken() + 10);
+            int advRemainingHP = adv.getHitPoints() - adv.getDamageTaken();
+            if (0 >= advRemainingHP) {
+//                lootDefeatedAdversary();
+                defeatAdversary(game.getPlayer(), adv);
             } else {
-                io.displayText("You missed attack!");
+                io.displayText("You hit " + adv.getName() + "! " + advRemainingHP + " remaining of " + adv.getHitPoints() + ".");
             }
-            if (adversary.getHitPoints() == 0) {
-                var advItem = adversary.getInventory().getItem();
-                game.getPlayer().getInventory().addItem(advItem);
-                io.displayText("You have defeated " + adversary.getName().toUpperCase() + " and obtained his loot..." + "\n" + advItem);
+        } else {
+            io.displayText("You miss " + adv.getName() + ".");
+        }
+    }
 
-                game.getPlayer().getLocation().setAdversary(null);
-            }
+    private void defeatAdversary(Player player, Adversary adv) {
+        io.displayText("Congrats! You defeated: " + adv.getName());
+        lootDefeatedAdversary(adv, player);
+        player.getLocation().setAdversary(null);
+    }
+
+    private void lootDefeatedAdversary(Adversary adv, Player player) {
+        Item droppedItem = adv.getItem();
+        if (!UniqueItems.NOTHING.equals(droppedItem)) {
+            io.displayText("You have obtained: " + droppedItem + "\nfrom "+ adv.getName());
+            player.getInventory().addItem(droppedItem);
+        }else{
+            System.out.println(adv.getName() + " was carrying Nothing.");
         }
     }
 }
