@@ -2,26 +2,37 @@ package org.improving.tag;
 
 import org.improving.tag.items.Item;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Entity(name = "location")
 public class Location {
 
-    private int id;
+
+    @Id
+    int id;
+
+    @Column(name = "Name")
     private String name = "";
+
+    @Column(name = "Description")
     private String description = "";
-    private List<String> tags = new ArrayList<>();
+
+
+   @OneToMany(mappedBy = "originId")
     private List<Exit> exits = new ArrayList<>();
+
+
+    @ManyToOne
+    @JoinColumn(name = "adversaryId")
     private Adversary adversary;
+
+
+    @Transient
     private TreasureChest treasureChest = TreasureChest.NO_TREASURE;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public Adversary getAdversary() {
         return adversary;
@@ -47,38 +58,47 @@ public class Location {
         this.description = description;
     }
 
-    public List<String> getTags() {
-        return tags;
-    }
 
     public List<Exit> getExits() {
         return exits;
-    }
-
-    public void addExit(Exit exit) {
-        this.exits.add(exit);
     }
 
     public void setTreasureChest(TreasureChest treasureChest) {
         this.treasureChest = treasureChest;
     }
 
+    public String getTreasureDescription() {
+        return treasureChest.getDescription();
+    }
+
     public Item openTreasureChest() {
-        if (TreasureChest.NO_TREASURE.equals(treasureChest)) {
-            throw new UnsupportedOperationException();
-        }
-        Item treasureItem = treasureChest.getItem();
+        Item treasure = treasureChest.getItem();
         treasureChest = TreasureChest.NO_TREASURE;
-        return treasureItem;
+        return treasure;
     }
 
-    public TreasureChest getTreasureChest() {
-        return treasureChest;
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void addExit(Exit exit) {
+        this.exits.add(exit);
     }
 
-    public TreasureChest getTreasureDescription() {
-        return treasureChest;
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Location) {
+            Location location  = (Location) obj;
+            return this.getName().equals(location.getName()) &&
+                    this.getDescription().equals(location.getDescription());
+        }
+        return super.equals(obj);
     }
+
 }
 
 

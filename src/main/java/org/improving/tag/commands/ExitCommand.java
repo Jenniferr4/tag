@@ -11,7 +11,7 @@ public class ExitCommand extends BaseAliasedCommand {
     private final SaveGameFactory saveFactory;
 
     public ExitCommand(InputOutput io, SaveGameFactory saveFactory) {
-        super(io, "Exit", "x", "ex");
+        super(io, "Exit", "x", "ex", "salir");
         this.saveFactory = saveFactory;
     }
 

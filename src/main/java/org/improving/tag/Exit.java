@@ -1,16 +1,34 @@
 package org.improving.tag;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Exit {
-    private String name;
-    private Location destination;
-    private int destinationId;
 
+@Entity(name = "exits")
+public class Exit {
+
+    @Id
+    int id;
+
+    @Column(name = "Name")
+    private String name;
+
+    @Transient
     private List<String> aliases = new ArrayList<>();
+
+    @Column(name="Aliases")
+    private String aliasesDb;
+
+    @OneToOne
+    @JoinColumn(name = "DestinationId")
+    private Location destination;
+
+    @ManyToOne
+    @JoinColumn(name = "OriginId")
+    private Location originId;
 
     public Exit() { }
 
@@ -36,14 +54,6 @@ public class Exit {
         this.destination = destination;
     }
 
-    public int getDestinationId() {
-        return destinationId;
-    }
-
-    public void setDestinationId(int destinationId) {
-        this.destinationId = destinationId;
-    }
-
     public List<String> getAliases() {
         return aliases;
     }
@@ -51,6 +61,26 @@ public class Exit {
     public void addAlias(String alias) {
         this.aliases.add(alias);
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setAliases(List<String> aliases) {
+        this.aliases = aliases;
+    }
+
+//    public int getOriginId() {
+//        return originId;
+//    }
+//
+//    public void setOriginId(int originId) {
+//        this.originId = originId;
+//    }
 
     @Override
     public String toString() {
@@ -71,4 +101,13 @@ public class Exit {
         }
         return super.equals(obj);
     }
+
+    @PostLoad
+    public void postLoad() {
+        var aliasesArr = aliasesDb.split(",");
+        for(String alias : aliasesArr) {
+            aliases.add(alias.trim());
+        }
+    }
+
 }

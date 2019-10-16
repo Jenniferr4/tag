@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ThankYouCommand extends BaseEmoteCommand {
     public ThankYouCommand (InputOutput io) {
-        super ("You're welcome. :) " , io , "ty", "thank you", "thanks");
+        super ("You're welcome. :) " , io , "ty", "gracias", "thank you", "thanks");
     }
 }

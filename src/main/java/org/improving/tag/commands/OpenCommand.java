@@ -10,7 +10,7 @@ public class OpenCommand extends BaseAliasedCommand {
     private InputOutput io;
 
     public OpenCommand(InputOutput io) {
-        super(io, "o", "open", "loot");
+        super(io, "o", "open", "loot", "abrir");
         this.io = io;
     }
 

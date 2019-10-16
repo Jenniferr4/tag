@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class GreetCommand extends BaseEmoteCommand {
     public GreetCommand(InputOutput io) {
-        super("Hello there!", io, " Gt", "g");
+        super("Hello there!", io, " Gt", "g", "Greet","hi", "hello", "hola", "bonjour");
     }
 }
