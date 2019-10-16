@@ -4,7 +4,6 @@ import org.improving.tag.items.Item;
 import org.improving.tag.items.UniqueItems;
 
 import javax.persistence.*;
-import java.util.Arrays;
 
 
 @Entity(name = "adversary")
@@ -26,12 +25,10 @@ public class Adversary {
     @Column(name = "attackDamage")
     private int attackDamage;
 
-    @Column(name = "DropItem")
-    private String dropItemDb;
-
 //    @Column(name = "ForExercise")
 //    private UniqueItems forExercise;
 
+    @Column
     @Enumerated(EnumType.STRING)
     private UniqueItems dropItem = UniqueItems.NOTHING;
 //    @Enumerated(EnumType.ORDINAL)
@@ -87,13 +84,6 @@ public class Adversary {
         this.id = id;
     }
 
-    public String getDropItemDb() {
-        return dropItemDb;
-    }
-
-    public void setDropItemDb(String dropItemDb) {
-        this.dropItemDb = dropItemDb;
-    }
 
     public Item getDropItem() {
         return dropItem;
@@ -105,14 +95,6 @@ public class Adversary {
 
     @PostLoad
     public void postLoad() {
-        System.out.println("Loaded an adversary");
-        if (null != dropItemDb) {
-            this.setItem(Arrays
-                    .stream(UniqueItems.values())
-                    .filter(item -> item.getName().equals(dropItem))
-                    .findFirst()
-                    .orElse(null)
-            );
-        }
+        System.out.println("Loaded an adversary " + dropItem );
     }
 }

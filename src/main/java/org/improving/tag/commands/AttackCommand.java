@@ -52,7 +52,7 @@ public class AttackCommand extends BaseAliasedCommand {
     private void lootDefeatedAdversary(Adversary adv, Player player) {
         Item droppedItem = adv.getItem();
         if (!UniqueItems.NOTHING.equals(droppedItem)) {
-            io.displayText("You have obtained: " + droppedItem + "\nfrom "+ adv.getName());
+            io.displayText("You have obtained " + droppedItem + "\nfrom "+ adv.getName());
             player.getInventory().addItem(droppedItem);
         }else{
             System.out.println(adv.getName() + " was carrying Nothing.");
