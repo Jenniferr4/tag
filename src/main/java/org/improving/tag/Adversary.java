@@ -32,7 +32,7 @@ public class Adversary {
 //    @Column(name = "ForExercise")
 //    private UniqueItems forExercise;
 
-    @Transient
+    @Enumerated(EnumType.STRING)
     private UniqueItems dropItem = UniqueItems.NOTHING;
 //    @Enumerated(EnumType.ORDINAL)
 //    private UniqueItems dropItem;
