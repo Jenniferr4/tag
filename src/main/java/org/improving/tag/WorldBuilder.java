@@ -1,55 +1,75 @@
 package org.improving.tag;
-
-import org.improving.tag.database.ExitsDAO;
-import org.improving.tag.database.LocationDAO;
+import org.improving.tag.database.ExitRepository;
+import org.improving.tag.database.LocationRepository;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
-
-//NOTES
-//make new object and return it
-
 
 @Component
 public class WorldBuilder {
     private List<Location> locationList = new ArrayList<>();
+    LocationRepository locationRepo;
+    ExitRepository exitRepo;
 
-    private final LocationDAO locationDAO;
-    private final ExitsDAO exitsDAO;
-
-    public WorldBuilder(LocationDAO locationDAO, ExitsDAO exitsDAO) {
-        this.locationDAO = locationDAO;
-        this.exitsDAO = exitsDAO;
+    public WorldBuilder(LocationRepository locationRepo, ExitRepository exitRepo) {
+        this.locationRepo = locationRepo;
+        this.exitRepo = exitRepo;
     }
+
+    @Transient
+    private List<Exit> exitList = new ArrayList<>();
 
     public Location buildWorld() {
         try {
-            List<Location> locations = locationDAO.findAll();
-//            for (Location location : locations) {
-//                List<Exit> exits = exitsDAO.findByOriginId(location.getId());
-//                exits.forEach(exit -> {
-//                    Location destination = locations.stream()
-//                            .filter(locat -> locat.getId() == exit.getDestination())
-//                            .findFirst()
-//                            .orElse(null);
-//                    exit.setDestination(destination);
-//                    location.addExit(exit);
-//                });
-//            }
+            List<Location> locations = locationRepo.findAll();
             locationList = locations;
             return locationList.get(0);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
-//            return buildHardCodedWorld();
         }
     }
-
     public List<Location> getLocationList() {
         return locationList;
     }
 }
+
+
+
+
+
+//
+//    public WorldBuilder(LocationDAO locationDAO, ExitsDAO exitsDAO) {
+//        this.locationDAO = locationDAO;
+//        this.exitsDAO = exitsDAO;
+//    }
+//
+//    public Location buildWorld() {
+//        try {
+//            List<Location> locations = locationDAO.findAll();
+////            for (Location location : locations) {
+////                List<Exit> exits = exitsDAO.findByOriginId(location.getId());
+////                exits.forEach(exit -> {
+////                    Location destination = locations.stream()
+////                            .filter(locat -> locat.getId() == exit.getDestination())
+////                            .findFirst()
+////                            .orElse(null);
+////                    exit.setDestination(destination);
+////                    location.addExit(exit);
+////                });
+////            }
+//            locationList = locations;
+//            return locationList.get(0);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+////            return buildHardCodedWorld();
+//        }
+
+
+
 
 //    public Location buildHardCodedWorld() {
 //        //=============================================

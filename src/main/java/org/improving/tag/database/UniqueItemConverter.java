@@ -1,4 +1,4 @@
-package org.improving.tag;
+package org.improving.tag.database;
 
 
 import org.improving.tag.items.UniqueItems;

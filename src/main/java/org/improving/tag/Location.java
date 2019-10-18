@@ -21,7 +21,7 @@ public class Location {
     private String description = "";
 
 
-   @OneToMany(mappedBy = "originId")
+   @OneToMany( fetch = FetchType.EAGER, mappedBy = "originId")
     private List<Exit> exits = new ArrayList<>();
 
 
